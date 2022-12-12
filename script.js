@@ -9,7 +9,6 @@ let gameBoard = (function(){
 })();
 
 let player = function(name, mark){
-    let player = {};
     this.name = name
     this.mark = mark
     return{
@@ -26,16 +25,21 @@ let gameController = (function(){
         let startingScreen = document.querySelector('.starting-screen')
         let square = document.querySelectorAll('.square')
         startingGame.addEventListener('click',()=>{
-            startingScreen.style.display = 'none'
-            for(let i = 0; i < button.length; i++){
-            square[i].style.display = 'block'
-            } 
-            let player1Name = document.getElementById('player1').value
-            let player2Name = document.getElementById('player2').value
-            player1 = player(player1Name, 'X')
-            player2 = player(player2Name, 'O')
-            mark = player1.mark
-            let turn = document.querySelector('.turn').innerHTML=`${player1.name} turn`
+            if(document.getElementById('player1').value == '' ||
+               document.getElementById('player2').value == ''){
+                alert("Please, enter names")
+            }else{
+                startingScreen.style.display = 'none'
+                for(let i = 0; i < button.length; i++){
+                square[i].style.display = 'block'
+                } 
+                let player1Name = document.getElementById('player1').value
+                let player2Name = document.getElementById('player2').value
+                player1 = player(player1Name, 'X')
+                player2 = player(player2Name, 'O')
+                mark = player1.mark
+                document.querySelector('.turn').innerHTML=`${player1.name}'s turn`
+            }
         })
     }
     starting()
@@ -77,7 +81,7 @@ let gameController = (function(){
                 let turn = document.querySelector('.turn').style.display='none'
                 let whoWin = document.querySelector('.who-win')
                 whoWin.style.display='block'
-                whoWin.innerHTML=`${player1.name} win`
+                whoWin.innerHTML=`${player1.name} won`
                 let restart = document.querySelector('.restart')
                 restart.style.display='block'
                 restart.addEventListener('click', ()=>{
@@ -139,10 +143,10 @@ let gameController = (function(){
             
             if(mark===player1.mark){
                 mark = player2.mark
-                let turn = document.querySelector('.turn').innerHTML=`${player2.name} turn`
+                let turn = document.querySelector('.turn').innerHTML=`${player2.name}'s turn`
             }else if(mark===player2.mark){
                 mark = player1.mark
-                let turn = document.querySelector('.turn').innerHTML=`${player1.name} turn`
+                let turn = document.querySelector('.turn').innerHTML=`${player1.name}'s turn`
             }
         })}    
 })();
